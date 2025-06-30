@@ -52,7 +52,7 @@ def generate_commit_image(commit_count):
     margin_x = 32
     margin_y = 20
     title_text = "Total Commits:"
-    title_font_size = 32
+    title_font_size = 50
     title_margin = 20
     min_width = 500
     min_height = 100
