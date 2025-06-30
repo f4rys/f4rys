@@ -47,20 +47,22 @@ def generate_commit_image(commit_count):
     commit_str = str(commit_count)
     digit_images = []
 
+    # Load Roboto-Black font with adjustable size
+    font_path = "Roboto-Black.ttf"
+    title_font_size = 32  # You can adjust this value as needed
     target_digit_height = 80
     target_digit_width = 80
     margin_x = 32
     margin_y = 20
     title_text = "Total Commits:"
-    title_font_size = 50
     title_margin = 20
     min_width = 500
     min_height = 100
 
-    # Try to load a truetype font, fallback to default
     try:
-        font = ImageFont.truetype("arial.ttf", title_font_size)
-    except Exception:
+        font = ImageFont.truetype(font_path, title_font_size)
+    except Exception as e:
+        print(f"Could not load Roboto-Black.ttf, using default font. Error: {e}")
         font = ImageFont.load_default()
 
     print(f"Generating images for commit count: {commit_str}")
