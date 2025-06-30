@@ -1,0 +1,39 @@
+name: Update MNIST Commit Counter
+
+on:
+  schedule:
+    # Runs every 12 hours
+    - cron: "0 */12 * * *"
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+ 
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v1
+
+      - name: Install dependencies with uv from pyproject.toml
+        run: uv pip install .
+
+      - name: Run the script
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: python generate_mnist_image.py
+
+      - name: Commit and push if changed
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: Update MNIST commit count image"
+          file_pattern: mnist_commits.png
+          commit_user_name: "GitHub Actions Bot"
+          commit_user_email: "actions@github.com"
+          commit_author: "GitHub Actions Bot <actions@github.com>"
