@@ -22,9 +22,7 @@ jobs:
         uses: astral-sh/setup-uv@v6
         with:
           activate-environment: true
-
-      - name: Create Virtual Environment
-        run: uv venv
+          enable-cache: true
 
       - name: Install the project
         run: uv sync --locked --all-extras --dev
